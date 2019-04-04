@@ -29,6 +29,18 @@ class Instructor extends Person {
         console.log(` ${student.name} receives a perfect score on ${subject}`)
         return this
     }
+
+    adjustStudentGrade(student) {
+        switch(determineAddOrSubtract()) {
+            case 'add': 
+                student.grade += genRandNum(1, 100 - student.grade)
+                break
+            case 'subtract': 
+                student.grade -= genRandNum(1, 100 - student.grade)
+                break
+        }
+        return this
+    }
 }
 
 class Student extends Person {
@@ -37,6 +49,7 @@ class Student extends Person {
         this.previousBackground = traits.previousBackground
         this.className = traits.className
         this.favSubjects = traits.favSubjects
+        this.grade = traits.grade
     }
 
     listsSubjects() {
@@ -53,6 +66,12 @@ class Student extends Person {
 
     sprintChallenge() {
         console.log(`${this.name} has begun sprint challenge on ${subject}`)
+        return this
+    }
+
+    graduate() {
+        if (this.grade > 70) this.readyForGraduation = true
+        else this.readyForGraduation = false
         return this
     }
 }
@@ -72,4 +91,12 @@ class ProjectManager extends Instructor {
     debugsCode(student, subject) {
         console.log(`${this.name} debugs ${student.name}'s code on ${subject}`)
     }
+}
+
+function genRandNum(min, max) {
+    return Math.random() * (max - min) + min
+}
+
+function determineAddOrSubtract() {
+    return (genRandNum(1, 10) >= 5) ? 'add' : 'subtract'
 }
