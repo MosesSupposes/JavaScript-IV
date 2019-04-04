@@ -16,17 +16,6 @@ Prototype Refactor
   * destroy() // prototype method that returns: `${this.name} was removed from the game.`
 */
 
-  
-function GameObject({createdAt, name, dimensions}=defaultGameConfig) {
-    this.createdAt = createdAt,
-    this.name = name,
-    this.dimensions = dimensions
-}
-
-GameObject.prototype.destroy = function() {
-    return `${this.name} was removed from the game.`
-}
-
 class GameObject {
     constructor(gameConfig) {
         this.createdAt = gameConfig.createdAt
@@ -45,21 +34,17 @@ class GameObject {
     * takeDamage() // prototype method -> returns the string '<object name> took damage.'
     * should inherit destroy() from GameObject's prototype
   */
-  
-  const defaultStats = {
-    ...defaultGameConfig,
-    healthPoints: 10
-  }
-  
-  function CharacterStats(stats=defaultStats) {
-    GameObject.call(this, stats) // super
-    this.healthPoints = stats.healthPoints // unique to CharacterStats objects
-  }
-  
-  CharacterStats.prototype = Object.create(GameObject.prototype)
-  CharacterStats.prototype.takeDamage = function() {
-    return `${this.name} took damage`
-  }
+
+class CharacterStats extends GameObject {
+    constructor(stats) {
+        super(stats)
+        this.healthPoints = stats.healthPoints
+    }
+
+    takeDamage() {
+        return `${this.name} took damage`
+    }
+}
   
   
   /*
