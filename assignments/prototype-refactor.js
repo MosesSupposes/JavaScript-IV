@@ -68,6 +68,20 @@ class Humanoid extends CharacterStats {
     greet() {
         return `${this.name} offers a greeting in ${this.language}`
     }
+
+    attack(attackType=this.basicAttack, target=null) {
+        const targetIsDead = target.healthPoints <= 0 
+    
+        if (!target) return `${this.name} attacked with ${this[attackType].name} and missed`
+        else if(targetIsDead) {
+          return `Oh no, ${target.name} turned into a horse! ${this.name} is literally beating a dead horse!`
+        }
+        else {
+          target.healthPoints -= this[attackType].power
+          const confirmation = `${this.name} attacked ${target.name} with ${this[attackType].name}. Damage dealt: ${this[attackType].power}.`
+          return (target.healthPoints <= 0) ? target.destroy() : confirmation
+        }
+      }   
 }
    
   /*
@@ -142,11 +156,14 @@ class Humanoid extends CharacterStats {
   
     // Stretch task: 
     // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
-    function Villain(attributes) {
-      Humanoid.call(this, attributes)
-      this.alliance = 'The Dark Lord'
-      this.basicAttack = attributes.basicAttack || { name: 'poison', power: 1 }
-      this.specialAttack = attributes.specialAttack || { name: 'Cersei-Lannister poison bomb!', power: 3 }
+
+    class Villain extends Humanoid {
+        constructor(attributes) {
+            super(attributes)
+            this.alliance = 'The Dark Lord'
+            this.basicAttack = attributes.basicAttack || { name: 'poison', power: 1 }
+            this.specialAttack = attributes.specialAttack || { name: 'poison bomb of Cersei-Lannister proportions!', power: 3 }
+        }
     }
   
     function Hero(attributes) {
@@ -156,19 +173,6 @@ class Humanoid extends CharacterStats {
       this.specialAttack = attributes.specialAttack || { name: 'heroic roundhouse kick!', power: 3 }
     }
   
-    function attack(attackType=this.basicAttack, target=null) {
-      const targetIsDead = target.healthPoints <= 0 
-  
-      if (!target) return `${this.name} attacked with ${this[attackType].name} and missed`
-      else if(targetIsDead) {
-        return `Oh no, ${target.name} turned into a horse! ${this.name} is literally beating a dead horse!`
-      }
-      else {
-        target.healthPoints -= this[attackType].power
-        const confirmation = `${this.name} attacked ${target.name} with ${this[attackType].name}. Damage dealt: ${this[attackType].power}.`
-        return (target.healthPoints <= 0) ? target.destroy() : confirmation
-      }
-    }   
   
     // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
     Villain.prototype = Humanoid.prototype
