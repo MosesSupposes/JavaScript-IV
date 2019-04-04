@@ -157,29 +157,26 @@ class Humanoid extends CharacterStats {
     // Stretch task: 
     // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
 
-    class Villain extends Humanoid {
-        constructor(attributes) {
-            super(attributes)
-            this.alliance = 'The Dark Lord'
-            this.basicAttack = attributes.basicAttack || { name: 'poison', power: 1 }
-            this.specialAttack = attributes.specialAttack || { name: 'poison bomb of Cersei-Lannister proportions!', power: 3 }
-        }
+class Villain extends Humanoid {
+    constructor(attributes) {
+        super(attributes)
+        this.alliance = 'The Dark Lord'
+        this.basicAttack = attributes.basicAttack || { name: 'poison', power: 1 }
+        this.specialAttack = attributes.specialAttack || { name: 'poison bomb of Cersei-Lannister proportions!', power: 3 }
     }
-  
-    function Hero(attributes) {
-      Humanoid.call(this, attributes)
-      this.alliance = 'The Defenders of Light'
-      this.basicAttack = attributes.basicAttack || { name: 'heroic punch', power: 1 }
-      this.specialAttack = attributes.specialAttack || { name: 'heroic roundhouse kick!', power: 3 }
+}
+
+class Hero extends Humanoid {
+    constructor(attributes) {
+        super(attributes)
+        this.alliance = 'The Defenders of Light'
+        this.basicAttack = attributes.basicAttack || { name: 'heroic punch', power: 1 }
+        this.specialAttack = attributes.specialAttack || { name: 'heroic roundhouse kick!', power: 3 }
     }
+}
   
   
     // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
-    Villain.prototype = Humanoid.prototype
-    Villain.prototype.attack = attack
-  
-    Hero.prototype = Humanoid.prototype
-    Hero.prototype.attack = attack
   
     // * Create two new objects, one a villain and one a hero and fight it out with methods!
     
@@ -201,8 +198,8 @@ class Humanoid extends CharacterStats {
   
   const theJoker = new Villain({
     createdAt: 'March 30, 1939',
-    name: 'Heath Ledger',
-    alias: 'The Joker', // frfr; he was the GOAT 
+    name: 'Heath Ledger',  // frfr; he was the GOAT 
+    alias: 'The Joker',
     dimensions: {
       height: 5,
       width: 2,
