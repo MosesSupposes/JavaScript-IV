@@ -16,25 +16,28 @@ Prototype Refactor
   * destroy() // prototype method that returns: `${this.name} was removed from the game.`
 */
 
-const defaultGameConfig = {
-    createdAt: Date.now(),
-    name: 'unnamed',
-    dimensions: {
-      length: 5,
-      width: 5,
-      height: 7
-    }
-  }
   
-  function GameObject({createdAt, name, dimensions}=defaultGameConfig) {
+function GameObject({createdAt, name, dimensions}=defaultGameConfig) {
     this.createdAt = createdAt,
     this.name = name,
     this.dimensions = dimensions
-  }
-  
-  GameObject.prototype.destroy = function() {
+}
+
+GameObject.prototype.destroy = function() {
     return `${this.name} was removed from the game.`
-  }
+}
+
+class GameObject {
+    constructor(gameConfig) {
+        this.createdAt = gameConfig.createdAt
+        this.name = gameConfig.name
+        this.dimensions = gameConfig.dimensions
+    }
+
+    destroy() {
+        return `${this.name} was removed from the game.`
+    }
+}
   
   /*
     === CharacterStats ===
