@@ -56,27 +56,19 @@ class CharacterStats extends GameObject {
     * should inherit destroy() from GameObject through CharacterStats
     * should inherit takeDamage() from CharacterStats
   */
-  
-  const defaultAttributes = {
-    ...defaultGameConfig,
-    ...defaultStats,
-    team: 'Blue',
-    weapons: ['fists'],
-    language: 'English',
-  }
-  
-  function Humanoid(attributes=defaultAttributes) {
-    CharacterStats.call(this, attributes)
-    const { team, weapons, language } = attributes
-    this.team = team
-    this.weapons = weapons
-    this.language = language
-  }
-  
-  Humanoid.prototype = Object.create(CharacterStats.prototype)
-  Humanoid.prototype.greet = function() {
-    return `${this.name} offers a greeting in ${this.language}`
-  }
+
+class Humanoid extends CharacterStats {
+    constructor(attributes) {
+        super(attributes)
+        this.team = attributes.team
+        this.weapons = attributes.weapons
+        this.language = attributes.language
+    }
+
+    greet() {
+        return `${this.name} offers a greeting in ${this.language}`
+    }
+}
    
   /*
     * Inheritance chain: GameObject -> CharacterStats -> Humanoid
